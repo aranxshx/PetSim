@@ -58,6 +58,14 @@ class catStats {
         return this.healthLevel;
         //test
     }
+    
+    public void setName(String newName) {
+        this.catName = newName;
+    }
+    
+    public String getName() {
+        return this.catName;
+    }
 }
 
 // Classes for Cat Stats
@@ -98,7 +106,7 @@ class health extends catStats {
 
 public class PetSim {
     public static void main(String[] args) {
-        frame canvas = new frame();
+        NewJFrame canvas = new NewJFrame();
         
         canvas.setVisible(true);
     }
