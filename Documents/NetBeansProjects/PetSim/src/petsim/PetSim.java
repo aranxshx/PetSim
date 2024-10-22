@@ -56,6 +56,7 @@ class catStats {
     
     public double getHealthLevel() {
         return this.healthLevel;
+        //test
     }
 }
 
