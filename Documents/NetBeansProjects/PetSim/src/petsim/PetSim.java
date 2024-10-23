@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package petsim;
+import java.util.Scanner;
 
-/**
- *
- * @author HP
- */
 class catStats {
     private double happinessLevel = 50;
     private double hungerLevel = 50;
@@ -20,6 +17,7 @@ class catStats {
     // Getter and Setter
     public void setHungerLevel(double hungerLevel) {
         this.hungerLevel = hungerLevel;
+        System.out.println(this.hungerLevel);
     }
 
     public double getHungerLevel() {
@@ -70,10 +68,34 @@ class catStats {
 
 // Classes for Cat Stats
 class hunger extends catStats {
-    public void addHunger(double foodType) {
-        double newHungerLevel = getHungerLevel() + foodType;
+    protected final double isaw = 20;
+    protected final double biscuit = 10;
+    protected final double spanishLatte = 25;
+    protected final double iceCream = 15;
+    protected final double beefSteak = 20;
+    protected double foodValue = 0;
+    
+    
+    
+    
+    public void addHunger(String name) {
+        // Identify the food type
+        identifyFood(name);
+        
+        double newHungerLevel = getHungerLevel() + foodValue;
         setHungerLevel(newHungerLevel);
     }
+    
+    public void identifyFood(String name){
+        switch(name) {
+            case "isaw" -> foodValue = isaw;
+            case "biscuit" -> foodValue = biscuit;
+            case "spanishLatte" -> foodValue = spanishLatte;
+            case "iceCream" -> foodValue = iceCream;
+            case "beefSteak" -> foodValue = beefSteak;
+        }
+    }
+    
 }
 
 class happiness extends catStats {
@@ -84,6 +106,8 @@ class happiness extends catStats {
 }
 
 class energy extends catStats {
+    
+    
     public void addEnergy(double plusEnergy) {
         double newEnergyLevel = getEnergyLevel() + plusEnergy;
         setEnergyLevel(newEnergyLevel);
@@ -106,8 +130,20 @@ class health extends catStats {
 
 public class PetSim {
     public static void main(String[] args) {
+        // This is only a tester for updating the food stat
+        /*String input = "";
+        hunger obj = new hunger();
+        
+        Scanner read = new Scanner(System.in);
+        System.out.println("Enter String: ");
+        input = read.nextLine();
+        
+        hunger.addHunger(input);
+        */
+        
         NewJFrame canvas = new NewJFrame();
         
         canvas.setVisible(true);
+        
     }
 }
