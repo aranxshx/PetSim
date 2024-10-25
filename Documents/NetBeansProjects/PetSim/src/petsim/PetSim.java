@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package petsim;
-import java.util.Scanner;
 
 class catStats {
     private double happinessLevel = 50;
@@ -17,7 +16,6 @@ class catStats {
     // Getter and Setter
     public void setHungerLevel(double hungerLevel) {
         this.hungerLevel = hungerLevel;
-        System.out.println(this.hungerLevel);
     }
 
     public double getHungerLevel() {
@@ -98,51 +96,44 @@ class hunger extends catStats {
     
 }
 
-class happiness extends catStats {
+class happiness extends hunger {
     public void addHappiness(double plusHappiness) {
-        double newHappinessLevel = getHungerLevel() + plusHappiness;
+        double newHappinessLevel = getHappinessLevel() + plusHappiness;
         setHappinessLevel(newHappinessLevel);
     }
 }
 
-class energy extends catStats {
-    
-    
+class energy extends happiness {
     public void addEnergy(double plusEnergy) {
         double newEnergyLevel = getEnergyLevel() + plusEnergy;
         setEnergyLevel(newEnergyLevel);
     }
 }
 
-class cleanliness extends catStats {
+class cleanliness extends energy {
     public void addCleanliness(double plusCleanliness) {
         double newCleanlinessLevel = getCleanlinessLevel() + plusCleanliness;
         setCleanlinessLevel(newCleanlinessLevel);
     }
 }
 
-class health extends catStats {
+class health extends cleanliness {
     public void addHealth(double plusHealth) {
         double newHealthLevel = getHealthLevel() + plusHealth;
         setHealthLevel(newHealthLevel);
     }
 }
 
+class cat extends health {
+    // Multi-Level Inheritance
+}
+
 public class PetSim {
+    public static cat obj1 = new cat();
+    
     public static void main(String[] args) {
-        // This is only a tester for updating the food stat
-        /*String input = "";
-        hunger obj = new hunger();
-        
-        Scanner read = new Scanner(System.in);
-        System.out.println("Enter String: ");
-        input = read.nextLine();
-        
-        hunger.addHunger(input);
-        */
         
         NewJFrame canvas = new NewJFrame();
-        
         canvas.setVisible(true);
         
     }

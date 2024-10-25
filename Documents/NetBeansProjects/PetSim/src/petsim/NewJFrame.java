@@ -4,6 +4,10 @@
  */
 package petsim;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author yuan
@@ -41,6 +45,16 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel2.setText("Character Here");
 
         jButton1.setText("Feed");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Play");
 
@@ -67,6 +81,10 @@ public class NewJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(596, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(28, 28, 28))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -83,17 +101,11 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jButton6)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(202, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton5)
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(282, 282, 282))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(302, 302, 302)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,9 +122,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
-                .addGap(46, 46, 46)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)
@@ -127,6 +139,69 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+        JDialog dialog = new JDialog(this, "Select Option", true);
+        dialog.setSize(500, 100);
+        dialog.setLayout(new FlowLayout());
+        dialog.setLocationRelativeTo(this);
+
+        // Create radio buttons
+        JRadioButton option1 = new JRadioButton("Isaw");
+        JRadioButton option2 = new JRadioButton("Biscuit");
+        JRadioButton option3 = new JRadioButton("Spanish Latte");
+        JRadioButton option4 = new JRadioButton("Ice Cream");
+        JRadioButton option5 = new JRadioButton("Beef Steak");
+
+        // Add radio buttons to a ButtonGroup
+        ButtonGroup group = new ButtonGroup();
+        group.add(option1);
+        group.add(option2);
+        group.add(option3);
+        group.add(option4);
+        group.add(option5);
+
+        // Add buttons to the dialog
+        dialog.add(option1);
+        dialog.add(option2);
+        dialog.add(option3);
+        dialog.add(option4);
+        dialog.add(option5);
+
+        // OK button to confirm selection
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (option1.isSelected()) {
+                    PetSim.obj1.addHunger("isaw");
+                } else if (option2.isSelected()) {
+                    System.out.println("Option 2 selected");
+                } else if (option3.isSelected()) {
+                    System.out.println("Option 3 selected");
+                } else if (option4.isSelected()) {
+                    System.out.println("Option 3 selected");
+                } else if (option5.isSelected()) {
+                    System.out.println("Option 3 selected");
+                }
+                dialog.dispose(); // Close dialog after selection
+            }
+        });
+        
+        // Cancel button to close dialog without action
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(e -> dialog.dispose());
+
+        dialog.add(okButton);
+        dialog.add(cancelButton);
+
+        // Show the dialog
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton1MousePressed
 
     /**
      * @param args the command line arguments
