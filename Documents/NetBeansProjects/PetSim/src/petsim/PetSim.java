@@ -66,11 +66,11 @@ class catStats {
 
 // Classes for Cat Stats
 class hunger extends catStats {
-    protected final double isaw = 20;
-    protected final double biscuit = 10;
-    protected final double spanishLatte = 25;
-    protected final double iceCream = 15;
-    protected final double beefSteak = 20;
+    protected final double isaw = -20;
+    protected final double biscuit = -10;
+    protected final double spanishLatte = -25;
+    protected final double iceCream = -15;
+    protected final double beefSteak = -20;
     protected double foodValue = 0;
     
     
@@ -81,16 +81,30 @@ class hunger extends catStats {
         identifyFood(name);
         
         double newHungerLevel = getHungerLevel() + foodValue;
-        setHungerLevel(newHungerLevel);
+        setHungerLevel(newHungerLevel); 
+        System.out.println("Hunger: " + getHungerLevel());
     }
     
     public void identifyFood(String name){
         switch(name) {
-            case "isaw" -> foodValue = isaw;
-            case "biscuit" -> foodValue = biscuit;
-            case "spanishLatte" -> foodValue = spanishLatte;
-            case "iceCream" -> foodValue = iceCream;
-            case "beefSteak" -> foodValue = beefSteak;
+            case "isaw":
+                foodValue = isaw;
+                break;
+            case "biscuit":
+                foodValue = biscuit;
+                break;
+            case "spanishLatte":
+                foodValue = spanishLatte;
+                break;
+            case "iceCream":
+                foodValue = iceCream;
+                break;
+            case "beefSteak":
+                foodValue = beefSteak;
+                break;
+            default:
+                System.out.println("No food found");
+                break;
         }
     }
     
@@ -100,6 +114,7 @@ class happiness extends hunger {
     public void addHappiness(double plusHappiness) {
         double newHappinessLevel = getHappinessLevel() + plusHappiness;
         setHappinessLevel(newHappinessLevel);
+        System.out.println("Happiness: " + getHappinessLevel());
     }
 }
 
@@ -107,6 +122,7 @@ class energy extends happiness {
     public void addEnergy(double plusEnergy) {
         double newEnergyLevel = getEnergyLevel() + plusEnergy;
         setEnergyLevel(newEnergyLevel);
+        System.out.println("Energy: " + getEnergyLevel());
     }
 }
 
@@ -114,6 +130,7 @@ class cleanliness extends energy {
     public void addCleanliness(double plusCleanliness) {
         double newCleanlinessLevel = getCleanlinessLevel() + plusCleanliness;
         setCleanlinessLevel(newCleanlinessLevel);
+        System.out.println("Cleanliness: " + getCleanlinessLevel());
     }
 }
 
@@ -121,11 +138,14 @@ class health extends cleanliness {
     public void addHealth(double plusHealth) {
         double newHealthLevel = getHealthLevel() + plusHealth;
         setHealthLevel(newHealthLevel);
+        System.out.println("Health: " + getHealthLevel());
     }
 }
 
 class cat extends health {
     // Multi-Level Inheritance
+    
+    
 }
 
 public class PetSim {

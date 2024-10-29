@@ -57,10 +57,36 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jButton2.setText("Play");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Clean");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+        });
 
         jButton4.setText("Sleep");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
 
         jButton5.setText("View Stats");
 
@@ -71,6 +97,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel3.setText("Cat Name");
 
         jButton6.setText("Set Name");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -146,7 +177,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         JDialog dialog = new JDialog(this, "Select Option", true);
-        dialog.setSize(500, 100);
+        dialog.setSize(450, 100);
         dialog.setLayout(new FlowLayout());
         dialog.setLocationRelativeTo(this);
 
@@ -180,14 +211,15 @@ public class NewJFrame extends javax.swing.JFrame {
                 if (option1.isSelected()) {
                     PetSim.obj1.addHunger("isaw");
                 } else if (option2.isSelected()) {
-                    System.out.println("Option 2 selected");
+                    PetSim.obj1.addHunger("biscuit");
                 } else if (option3.isSelected()) {
-                    System.out.println("Option 3 selected");
+                    PetSim.obj1.addHunger("spanishLatte");
                 } else if (option4.isSelected()) {
-                    System.out.println("Option 3 selected");
+                    PetSim.obj1.addHunger("iceCream");
                 } else if (option5.isSelected()) {
-                    System.out.println("Option 3 selected");
+                    PetSim.obj1.addHunger("beefSteak");
                 }
+                PetSim.obj1.addHappiness(20);
                 dialog.dispose(); // Close dialog after selection
             }
         });
@@ -202,6 +234,53 @@ public class NewJFrame extends javax.swing.JFrame {
         // Show the dialog
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1MousePressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        // Increases Happiness, Decreases Energy
+        PetSim.obj1.addHappiness(20);
+        PetSim.obj1.addEnergy(-20);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        // Increases Cleanliness, Decreases Energy
+        PetSim.obj1.addCleanliness(50);
+        PetSim.obj1.addEnergy(-20);
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        // TODO add your handling code here:
+        String input = JOptionPane.showInputDialog(this, "Enter a new name for your pet:");
+    
+        // If the user entered something (input is not null), update the label with the new name
+        if (input != null && !input.trim().isEmpty()) {
+            PetSim.obj1.setName(input);
+            jLabel1.setText(PetSim.obj1.getName());
+        } else {
+            JOptionPane.showMessageDialog(this, "No name entered!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        //Increases Energy and Health. Decreases Happiness
+        PetSim.obj1.addEnergy(20);
+        PetSim.obj1.addHealth(20);
+        PetSim.obj1.addHappiness(-20);
+    }//GEN-LAST:event_jButton4MouseClicked
 
     /**
      * @param args the command line arguments
