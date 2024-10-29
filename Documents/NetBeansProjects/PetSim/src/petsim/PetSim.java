@@ -147,7 +147,7 @@ class cat extends health {
     
     public void limiter() {
         if(getEnergyLevel() >= 101) {
-            setEvergyLevel(100);
+            setEnergyLevel(100);
         }
     }
     
