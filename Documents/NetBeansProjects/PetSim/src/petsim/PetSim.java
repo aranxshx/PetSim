@@ -7,7 +7,7 @@ package petsim;
 class catStats {
     private double happinessLevel = 50;
     private double hungerLevel = 50;
-    private double energyLevel = 50;
+    private double energyLevel = 40;
     private double cleanlinessLevel = 50;
     private double healthLevel = 50;
     private String catName = "Whiskers";
@@ -145,6 +145,21 @@ class health extends cleanliness {
 class cat extends health {
     // Multi-Level Inheritance
     
+    public void limiter() {
+        if(getEnergyLevel() >= 101) {
+            setEvergyLevel(100);
+        }
+    }
+    
+    // Methods for Stats
+    public boolean calculator(double base, double number) {
+        double result = base - number;
+        if (result <= -1) {
+            return true; // It will proceed to the action
+        } else {
+            return false; // It will not proceed to the action
+        }
+    }
     
 }
 

@@ -177,13 +177,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         JDialog dialog = new JDialog(this, "Select Option", true);
-        dialog.setSize(450, 100);
+        dialog.setSize(500, 100);
         dialog.setLayout(new FlowLayout());
         dialog.setLocationRelativeTo(this);
 
         // Create radio buttons
         JRadioButton option1 = new JRadioButton("Isaw");
-        JRadioButton option2 = new JRadioButton("Biscuit");
+        JRadioButton option2 = new JRadioButton("Biscuit ni Bob");
         JRadioButton option3 = new JRadioButton("Spanish Latte");
         JRadioButton option4 = new JRadioButton("Ice Cream");
         JRadioButton option5 = new JRadioButton("Beef Steak");
@@ -244,10 +244,14 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseEntered
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-        // Increases Happiness, Decreases Energy
+        // Every click of the mouse.
+        // PLAY ---- Increases Happiness, Decreases Energy
+        if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 20))) { // 20 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 20)
         PetSim.obj1.addHappiness(20);
         PetSim.obj1.addEnergy(-20);
+        } else {
+            JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
@@ -255,10 +259,14 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        // Increases Cleanliness, Decreases Energy
+        // Every click of the mouse.
+        // CLEAN ---- Increases Cleanliness, Decreases Energy
+        if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 20))) { // 20 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 20)
         PetSim.obj1.addCleanliness(50);
         PetSim.obj1.addEnergy(-20);
+        } else {
+            JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
