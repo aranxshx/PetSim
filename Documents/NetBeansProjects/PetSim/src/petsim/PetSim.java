@@ -82,7 +82,6 @@ class hunger extends catStats {
         
         double newHungerLevel = getHungerLevel() + foodValue;
         setHungerLevel(newHungerLevel); 
-        System.out.println("Hunger: " + getHungerLevel());
     }
     
     public void identifyFood(String name){
@@ -114,7 +113,6 @@ class happiness extends hunger {
     public void addHappiness(double plusHappiness) {
         double newHappinessLevel = getHappinessLevel() + plusHappiness;
         setHappinessLevel(newHappinessLevel);
-        System.out.println("Happiness: " + getHappinessLevel());
     }
 }
 
@@ -122,7 +120,6 @@ class energy extends happiness {
     public void addEnergy(double plusEnergy) {
         double newEnergyLevel = getEnergyLevel() + plusEnergy;
         setEnergyLevel(newEnergyLevel);
-        System.out.println("Energy: " + getEnergyLevel());
     }
 }
 
@@ -130,7 +127,6 @@ class cleanliness extends energy {
     public void addCleanliness(double plusCleanliness) {
         double newCleanlinessLevel = getCleanlinessLevel() + plusCleanliness;
         setCleanlinessLevel(newCleanlinessLevel);
-        System.out.println("Cleanliness: " + getCleanlinessLevel());
     }
 }
 
@@ -138,23 +134,16 @@ class health extends cleanliness {
     public void addHealth(double plusHealth) {
         double newHealthLevel = getHealthLevel() + plusHealth;
         setHealthLevel(newHealthLevel);
-        System.out.println("Health: " + getHealthLevel());
     }
 }
 
 class cat extends health {
     // Multi-Level Inheritance
     
-    public void limiter() {
-        if(getEnergyLevel() >= 101) {
-            setEnergyLevel(100);
-        }
-    }
-    
     // Methods for Stats
-    public boolean calculator(double base, double number) {
+    public boolean calculator(double base, double number) { // 20
         double result = base - number;
-        if (result <= -1) {
+        if (result < 0) {
             return true; // It will proceed to the action
         } else {
             return false; // It will not proceed to the action
