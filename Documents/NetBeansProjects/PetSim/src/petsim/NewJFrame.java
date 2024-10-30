@@ -3,13 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package petsim;
-
+//p
+import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author yuan
@@ -25,6 +32,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public boolean cleanClick = false; // This is a boolean for the Clean button
     public boolean cleanInformation = false; // Information for cleaning
     public boolean sleepStatus = false;
+    private SpriteSheetRenderer spriteRenderer;
     
     public void printStats() {
         System.out.println("\n\n|| " + PetSim.obj1.getName() + " stats ||");
@@ -89,10 +97,27 @@ public class NewJFrame extends javax.swing.JFrame {
         progressBar.setValue(value); // Update the progress bar value
         progressBar.setString(value + "%"); // Update the displayed string
     }
-    
+
     public NewJFrame() {
         initComponents();
+         spriteRenderer = new SpriteSheetRenderer("C:\\Users\\HP\\Documents\\NetBeansProjects\\PetSim\\src\\petsim\\lib\\Tile.png", 32, 32);
+         spriteRenderer.setMusic("lib/music.wav");
+
+        jPanel1.add(spriteRenderer); // Important: Add to the panel.
+
+        //Use BorderLayout for panel layout
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.add(spriteRenderer, BorderLayout.CENTER);
+    
+        jButton2.addActionListener(e -> doPlayAnimation());  // Use doPlayAnimation instead
+        jButton1.addActionListener(e -> updateSprite(49,56));  
+        jButton3.addActionListener(e -> updateSprite(97,112)); 
+        jButton4.addActionListener(e->doSleepAnimation());
+
+       //Ensure correct idle animation on load
+       spriteRenderer.setAnimationRanges(new int[][]{{129,136}});
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,7 +136,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar(0, 100);
         jProgressBar2 = new javax.swing.JProgressBar();
         jProgressBar3 = new javax.swing.JProgressBar();
@@ -189,6 +213,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel1MouseDragged(evt);
@@ -206,28 +231,15 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Character Here");
-        jLabel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jLabel2MouseDragged(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 102, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel2)
-                .addContainerGap(43, Short.MAX_VALUE))
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         jProgressBar1.setValue(0);
@@ -247,16 +259,17 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButton6)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jButton6))
+                                .addGap(121, 121, 121)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
+                        .addGap(132, 132, 132)
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,45 +278,48 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(140, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addGap(24, 24, 24)
-                .addComponent(jButton4)
-                .addGap(181, 181, 181))
+                        .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton4)))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
-                .addGap(11, 11, 11)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton1)
-                        .addComponent(jButton4)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton2)
+                                .addComponent(jButton1)
+                                .addComponent(jButton4)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(79, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -466,10 +482,6 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4MouseClicked
 
-    private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel2MouseDragged
-
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1MouseDragged
@@ -500,7 +512,57 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+ private void doPlayAnimation() {
+        //Check for energy usage
+         if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 20))) {
 
+            updateSprite(25,40); // Play animation
+            PetSim.obj1.addHappiness(20);
+            PetSim.obj1.addEnergy(-20);
+            limiter();
+            printStats();
+
+        } else {
+            JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
+           
+        }
+    }
+      private void doSleepAnimation() {
+        if (sleepStatus) {
+            sleepStatus = false;
+            jButton4.setText("Sleep");
+              spriteRenderer.setAnimationRanges(new int[][]{{129,136}});  //Set animation back to idle
+
+        } else {
+            sleepStatus = true;
+            jButton4.setText("Stop");
+              spriteRenderer.setAnimationRanges(new int[][]{{214,219}});
+        new Thread(() -> {
+            while (sleepStatus) {
+                try {
+                    Thread.sleep(1000);
+                   
+                    if (PetSim.obj1 != null) {
+                        PetSim.obj1.addEnergy(2);
+                        limiter();
+
+                       SwingUtilities.invokeLater(() -> printStats()); 
+                    } else {
+                        System.err.println("PetSim cannot be found");
+                    }
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
+    }
+}
+//Simplified function to set new sprite range based on button clicks
+   private void updateSprite(int start, int end){
+
+    spriteRenderer.setAnimationRanges(new int[][]{{start,end}});
+}
     /**
      * @param args the command line arguments
      */
@@ -543,7 +605,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
