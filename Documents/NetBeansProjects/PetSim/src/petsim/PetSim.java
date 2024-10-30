@@ -4,6 +4,9 @@
  */
 package petsim;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 class catStats {
     private double happinessLevel = 50;
     private double hungerLevel = 50;
@@ -156,7 +159,6 @@ public class PetSim {
     public static cat obj1 = new cat();
     
     public static void main(String[] args) {
-        
         NewJFrame canvas = new NewJFrame();
         canvas.setVisible(true);
         
