@@ -100,7 +100,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() {
         initComponents();
-         spriteRenderer = new SpriteSheetRenderer("C:\\Users\\HP\\Documents\\NetBeansProjects\\PetSim\\src\\petsim\\lib\\Tile.png", 32, 32);
+         spriteRenderer = new SpriteSheetRenderer("C:\\Users\\HP\\Documents\\NetBeansProjects\\PetSim\\src\\petsim\\Tile.png", 32, 32);
          spriteRenderer.setMusic("lib/music.wav");
 
         jPanel1.add(spriteRenderer); // Important: Add to the panel.
@@ -197,7 +197,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Whiskers");
+        jLabel1.setText("User");
 
         jLabel3.setText("Cat Name");
 

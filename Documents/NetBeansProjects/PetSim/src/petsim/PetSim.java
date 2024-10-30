@@ -13,7 +13,7 @@ class catStats {
     private double energyLevel = 40;
     private double cleanlinessLevel = 50;
     private double healthLevel = 50;
-    private String catName = "Whiskers";
+    private String catName = "User";
     
     
     // Getter and Setter
