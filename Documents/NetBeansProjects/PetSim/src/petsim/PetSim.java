@@ -70,16 +70,19 @@ class catStats {
 
 // Classes for Cat Stats
 class hunger extends catStats {
-    protected final double isaw = -20;
-    protected final double biscuit = -10;
-    protected final double spanishLatte = -25;
-    protected final double iceCream = -15;
-    protected final double beefSteak = -20;
+    protected final double isaw = 20;
+    protected final double biscuit = 10;
+    protected final double spanishLatte = 25;
+    protected final double iceCream = 15;
+    protected final double beefSteak = 20;
     protected double foodValue = 0;
     
     
     
-    
+    public void hungerIncrease(double increase) {
+        double newHungerLevel = getHungerLevel() + increase;
+        setHungerLevel(newHungerLevel); 
+    }
     public void addHunger(String name) {
         // Identify the food type
         identifyFood(name);

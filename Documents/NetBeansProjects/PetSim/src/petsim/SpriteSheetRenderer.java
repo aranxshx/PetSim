@@ -40,6 +40,7 @@ public class SpriteSheetRenderer extends JPanel {
     private Clip audioClip; // Audio clip for background music
     private boolean isPlayingAudio = false; // Track if audio is playing
     public SpriteSheetRenderer(String spritePath, int spriteWidth, int spriteHeight) {
+        setOpaque(false);
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
 
@@ -143,15 +144,16 @@ public class SpriteSheetRenderer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int scaleX = 4;
-        int scaleY = 4;
+         int scaleX = 4;
+    int scaleY = 4;
 
-        if (sprites[currentFrame] != null) {
-            int scaledWidth = spriteWidth * scaleX;
-            int scaledHeight = spriteHeight * scaleY;
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(sprites[currentFrame], 0, 0, scaledWidth, scaledHeight, null);
-        }
+    if (sprites[currentFrame] != null) {
+        int scaledWidth = spriteWidth * scaleX;
+        int scaledHeight = spriteHeight * scaleY;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setComposite(AlphaComposite.SrcOver); // Set transparency mode
+        g2d.drawImage(sprites[currentFrame], 0, 0, scaledWidth, scaledHeight, null);
+    }
     }
 
     @Override

@@ -122,6 +122,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         progressBar.setValue(value); // Update the progress bar value
         progressBar.setString(value + "%"); // Update the displayed string
+        progressBar.setStringPainted(true);
     }
 
     public NewJFrame() {
@@ -153,8 +154,12 @@ public class NewJFrame extends javax.swing.JFrame {
         addProgressBarChangeListener(jProgressBar3);
         addProgressBarChangeListener(jProgressBar4);
         addProgressBarChangeListener(jProgressBar5);
+        
+        // Disregard this
         // PetSim.obj1.loadStatsFromCSV(); // Load stats on startup ---------------------------------------------> LOAD
-        updateProgressBars();
+        //updateProgressBars();
+        
+        printStats();
  try {
             URL spriteSheetUrl = getClass().getResource("/assets/Tile.png");
             if (spriteSheetUrl == null) {
@@ -233,18 +238,30 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jProgressBar1 = new javax.swing.JProgressBar(0, 100);
         jProgressBar2 = new javax.swing.JProgressBar();
         jProgressBar3 = new javax.swing.JProgressBar();
         jProgressBar4 = new javax.swing.JProgressBar();
         jProgressBar5 = new javax.swing.JProgressBar();
         jButton5 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 153, 153));
+        setForeground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 255));
+        jButton1.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jButton1.setText("Feed");
+        jButton1.setPreferredSize(new java.awt.Dimension(72, 21));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton1MousePressed(evt);
@@ -255,7 +272,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 312, 80, 23));
 
+        jButton2.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jButton2.setText("Play");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -270,8 +289,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 312, -1, -1));
 
         jButton3.setText("Clean");
+        jButton3.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jButton3.setLabel("Clean");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -286,20 +307,27 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(368, 312, -1, -1));
 
+        jButton4.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jButton4.setText("Sleep");
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton4MouseClicked(evt);
             }
         });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 312, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("PKMN RBYGSC", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText(PetSim.obj1.getName());
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 73, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jLabel3.setText("Cat Name");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 51, 90, -1));
 
+        jButton6.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
         jButton6.setText("Set Name");
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -311,8 +339,70 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 111, -1, -1));
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jProgressBar1.setValue(0);
+        jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jProgressBar1.setBorder(null);
+        jProgressBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 72, 60));
+
+        jProgressBar2.setValue(0);
+        jProgressBar2.setBackground(new java.awt.Color(255, 255, 255));
+        jProgressBar2.setBorder(null);
+        getContentPane().add(jProgressBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 72, 60));
+
+        jProgressBar3.setValue(0);
+        jProgressBar3.setBackground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jProgressBar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 72, 60));
+
+        jProgressBar4.setValue(0);
+        jProgressBar4.setBackground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jProgressBar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, 72, 60));
+
+        jProgressBar5.setValue(0);
+        jProgressBar5.setBackground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jProgressBar5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 72, 60));
+
+        jButton5.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jButton5.setText("Save Stats");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 130, -1));
+
+        jLabel9.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/cleanliness.png"))); // NOI18N
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(523, 348, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/health.png"))); // NOI18N
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 348, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/energy.png"))); // NOI18N
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 348, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/happiness.png"))); // NOI18N
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 348, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("PKMN RBYGSC", 0, 12)); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/hunger.png"))); // NOI18N
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 348, 30, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/menu.png"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 338, 470, 350));
+
+        jPanel1.setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
+        jPanel1.setOpaque(false);
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel1MouseDragged(evt);
@@ -344,107 +434,13 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jProgressBar1.setValue(0);
-        jProgressBar1.setBorder(null);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
-        jProgressBar2.setValue(0);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/room.png"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 440));
 
-        jProgressBar3.setValue(0);
-
-        jProgressBar4.setValue(0);
-
-        jProgressBar5.setValue(0);
-
-        jButton5.setText("Save Stats");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
-            }
-        });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jButton6))
-                                .addGap(121, 121, 121)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(164, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton4)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jProgressBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jProgressBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jProgressBar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addGap(25, 25, 25)))
-                        .addGap(34, 34, 34))))
-        );
-
-        pack();
+        setSize(new java.awt.Dimension(720, 460));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -499,7 +495,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 } else if (option5.isSelected()) {
                     PetSim.obj1.addHunger("beefSteak");
                 }
-                PetSim.obj1.addHappiness(20);
+                PetSim.obj1.addHappiness(5);
+                PetSim.obj1.addHealth(2);
+                PetSim.obj1.addCleanliness(-10);
                 limiter();
                 printStats();
                 dialog.dispose(); // Close dialog after selection
@@ -528,9 +526,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // Every click of the mouse.
         // PLAY ---- Increases Happiness, Decreases Energy
-        if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 20))) { // 20 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 20)
-        PetSim.obj1.addHappiness(20);
-        PetSim.obj1.addEnergy(-20);
+        if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 5))) { // 5 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 5)
+        PetSim.obj1.addHappiness(8);
+        PetSim.obj1.addEnergy(-5);
+        PetSim.obj1.addCleanliness(-10);
+        PetSim.obj1.addHealth(-10);
+        PetSim.obj1.hungerIncrease(-2);
         limiter();
         printStats();
         } else {
@@ -577,37 +578,51 @@ public class NewJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No name entered!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton6MouseClicked
-
+    private Thread sleepThread;
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        // TODO add your handling code here:
-        //Increases Energy and Health. Decreases Happiness
-        if(sleepStatus) {
-            sleepStatus = false;
-            jButton4.setText("Sleep");
-        } else {
-            sleepStatus = true;
-            jButton4.setText("Stop");
-            
-            new Thread(() -> {
-                while(sleepStatus) {
-                    try {
-                        Thread.sleep(1000);
-                        
-                        if (PetSim.obj1 != null) {
-                            PetSim.obj1.addEnergy(2);
-                            limiter();
-                            
-                            SwingUtilities.invokeLater(() -> printStats());
-                        } else {
-                            System.err.println("PetSim cannot be found");
-                        }
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                }
-            }).start();
+       if (sleepStatus) {
+        // Stop sleeping
+        sleepStatus = false;
+        jButton4.setText("Sleep");
+        SwingUtilities.invokeLater(() -> jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/room.png"))));
+
+        // Interrupt the running thread, if it exists
+        if (sleepThread != null && sleepThread.isAlive()) {
+            sleepThread.interrupt();
         }
+    } else {
+        // Start sleeping
+        sleepStatus = true;
+        jButton4.setText("Stop");
+        SwingUtilities.invokeLater(() -> jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/darkroom.jpg"))));
+
+        // Create a new thread for sleep actions
+        sleepThread = new Thread(() -> {
+            while (sleepStatus) {
+                try {
+                    Thread.sleep(1000);
+
+                    if (PetSim.obj1 != null) {
+                        PetSim.obj1.addEnergy(2);
+                        PetSim.obj1.addHealth(2);
+                        PetSim.obj1.hungerIncrease(-1); // Increase Hunger
+                        PetSim.obj1.addHappiness(-6);
+                        limiter();
+
+                        SwingUtilities.invokeLater(this::printStats);
+                    } else {
+                        System.err.println("PetSim cannot be found");
+                    }
+                } catch (InterruptedException e) {
+                    // Thread was interrupted; exit the loop
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        });
+
+        sleepThread.start();
+    }
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
@@ -637,6 +652,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 1))) { // 20 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 20)
                 PetSim.obj1.addCleanliness(2);
+                PetSim.obj1.hungerIncrease(-1);
                 PetSim.obj1.addEnergy(-1);
                 limiter();
                 printStats();
@@ -656,10 +672,10 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        if (PetSim.obj1.getHappinessLevel() < 20 || PetSim.obj1.getHungerLevel() > 80) {
+        if (PetSim.obj1.getHappinessLevel() < 20 || PetSim.obj1.getHungerLevel() < 20) {
         JOptionPane.showMessageDialog(this,
                 "Conditions not met for saving stats.\n"
-                        + "Ensure happiness level is above 20 and hunger level is below 80.",
+                        + "Ensure happiness level is above 20 and hunger level is above 20.",
                 "Warning",
                 JOptionPane.WARNING_MESSAGE);
     } else {
@@ -681,62 +697,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanel1MouseExited
 
-
-    // Action performed for the save button
-        // Condition to check before saving stats
-        
-
-    private void doPlayAnimation() {
-        //Check for energy usage
-         if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 20))) {
-
-            updateSprite(25,40); // Play animation
-            PetSim.obj1.addHappiness(20);
-            PetSim.obj1.addEnergy(-20);
-            limiter();
-            printStats();
-
-        } else {
-            JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
-           
-        }
-    }
-      private void doSleepAnimation() {
-        if (sleepStatus) {
-            sleepStatus = false;
-            jButton4.setText("Sleep");
-              spriteRenderer.setAnimationRanges(new int[][]{{17,23}});  //Set animation back to idle
-
-        } else {
-            sleepStatus = true;
-            jButton4.setText("Stop");
-              spriteRenderer.setAnimationRanges(new int[][]{{98,103}});//sleep sprite
-        new Thread(() -> {
-            while (sleepStatus) {
-                try {
-                    Thread.sleep(1000);
-                   
-                    if (PetSim.obj1 != null) {
-                        PetSim.obj1.addEnergy(2);
-                        limiter();
-
-                       SwingUtilities.invokeLater(() -> printStats()); 
-                    } else {
-                        System.err.println("PetSim cannot be found");
-                    }
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                    break;
-                }
-            }
-        }).start();
-    }
-}
-//Simplified function to set new sprite range based on button clicks
-   private void updateSprite(int start, int end){
-
-    spriteRenderer.setAnimationRanges(new int[][]{{start,end}});
-}
+    
     /**
      * @param args the command line arguments
      */
@@ -754,28 +715,7 @@ public class NewJFrame extends javax.swing.JFrame {
         frame.setVisible(true);
     }
 }
-   private void showBroom() {
-        jPanel1.setCursor(createBroomCursor());
-        broomLabel.setVisible(true);
-    }
 
-    private void hideBroom() {
-        jPanel1.setCursor(Cursor.getDefaultCursor());
-        broomLabel.setVisible(false);
-    }
-
- private Cursor createBroomCursor() {
-        // Create a custom cursor from the broom image
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-         // Create a blank cursor
-         Image blankImage = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
-         Cursor blankCursor = toolkit.createCustomCursor(blankImage, new Point(0,0), "blank cursor");
-
-         jPanel1.setCursor(blankCursor);
-
-        return toolkit.createCustomCursor(broomIcon.getImage(), new Point(10, 25), "broom cursor"); // Adjust hotspot as needed
-
-    }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -785,7 +725,14 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
@@ -834,4 +781,54 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }
 
+    // ANIMATION FUNCTIONS
+     private Cursor createBroomCursor() {
+        // Create a custom cursor from the broom image
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+         // Create a blank cursor
+         Image blankImage = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
+         Cursor blankCursor = toolkit.createCustomCursor(blankImage, new Point(0,0), "blank cursor");
+
+         jPanel1.setCursor(blankCursor);
+
+        return toolkit.createCustomCursor(broomIcon.getImage(), new Point(10, 25), "broom cursor"); // Adjust hotspot as needed
+
+    }
+     
+     private void showBroom() {
+        jPanel1.setCursor(createBroomCursor());
+        broomLabel.setVisible(true);
+    }
+
+    private void hideBroom() {
+        jPanel1.setCursor(Cursor.getDefaultCursor());
+        broomLabel.setVisible(false);
+    }
+    
+    private void doSleepAnimation() {
+        if (sleepStatus) {
+              spriteRenderer.setAnimationRanges(new int[][]{{17,23}});  //Set animation back to idle
+
+        } else {
+              spriteRenderer.setAnimationRanges(new int[][]{{98,103}});//sleep sprite
+    }
+    }
+    
+    //Simplified function to set new sprite range based on button clicks
+   private void updateSprite(int start, int end){
+
+    spriteRenderer.setAnimationRanges(new int[][]{{start,end}});
+}
+   
+   private void doPlayAnimation() {
+        //Check for energy usage
+         if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 5))) {
+
+            updateSprite(25,40); // Play animation
+
+        } else {
+            JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
+           
+        }
+    }
 }
