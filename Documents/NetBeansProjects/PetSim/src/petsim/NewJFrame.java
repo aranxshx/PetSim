@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.border.TitledBorder;
@@ -123,11 +124,20 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         //broom cursor for  clean
-        broomIcon = new ImageIcon("C://Users//yuan//Documents//NetBeansProjects//PetSims//Documents//NetBeansProjects//PetSim//src//petsim//assets//broom.png"); // Replace with your image path
-        broomLabel = new JLabel(broomIcon);
-        broomLabel.setVisible(false);  // Initially hidden
-        jPanel1.add(broomLabel);
-        
+      try {
+        URL broomUrl = getClass().getResource("/assets/broom.png");
+        if (broomUrl == null) { // Handle the case where the resource is not found
+            System.err.println("Broom image not found!");
+        } else {
+            String broomPath = broomUrl.toExternalForm(); // or broomUrl.getPath()  see explanation below
+            broomIcon = new ImageIcon(broomPath); // or directly new ImageIcon(broomURL) if it works
+
+           // ... (rest of broom setup)
+        }
+
+    } catch (Exception ex) { // More general exception handling
+            System.err.println("Error loading broom image: " + ex.getMessage());
+    }
           // Setup progress bars (including initial borders)
          setupVerticalProgressBar(jProgressBar1); // No title needed here
         setupVerticalProgressBar(jProgressBar2);
@@ -143,9 +153,23 @@ public class NewJFrame extends javax.swing.JFrame {
         addProgressBarChangeListener(jProgressBar5);
         PetSim.obj1.loadStatsFromCSV(); // Load stats on startup
         updateProgressBars();
-         spriteRenderer = new SpriteSheetRenderer("C://Users//yuan//Documents//NetBeansProjects//PetSims//Documents//NetBeansProjects//PetSim//src//petsim//assets//Tile.png", 32, 32);
-         spriteRenderer.setMusic("lib/music.wav");
+ try {
+            URL spriteSheetUrl = getClass().getResource("/assets/Tile.png");
+            if (spriteSheetUrl == null) {
+                System.err.println("Tile.png not found!"); // More helpful error message
+            } else {
+                // Create spriteRenderer AFTER initComponents()!
+                spriteRenderer = new SpriteSheetRenderer(spriteSheetUrl.toExternalForm(), 32, 32);
 
+                jPanel1.add(spriteRenderer); // Add to the panel NOW
+
+                // Set the layout AFTER adding the renderer!
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(spriteRenderer, BorderLayout.CENTER); // Ensure layout and add work correctly
+            }
+         } catch (Exception ex) {
+            System.err.println("Error setting up sprite sheet renderer " + ex);
+        }
         jPanel1.add(spriteRenderer); // Important: Add to the panel.
 
         //Use BorderLayout for panel layout

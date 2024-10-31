@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URL;
+
 
 public class SpriteSheetRenderer extends JPanel {
     
@@ -41,9 +43,9 @@ public class SpriteSheetRenderer extends JPanel {
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
 
-        try {
-            // Load the sprite sheet
-            spriteSheet = ImageIO.read(new File(spritePath));
+      try {
+            // Load the sprite sheet using the String path
+            spriteSheet = ImageIO.read(new URL(spritePath));
 
             // Calculate number of sprites in the sheet
             int rows = spriteSheet.getHeight() / spriteHeight;
