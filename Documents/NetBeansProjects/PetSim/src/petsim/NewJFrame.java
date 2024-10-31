@@ -124,20 +124,19 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         //broom cursor for  clean
-      try {
-        URL broomUrl = getClass().getResource("/assets/broom.png");
-        if (broomUrl == null) { // Handle the case where the resource is not found
-            System.err.println("Broom image not found!");
-        } else {
-            String broomPath = broomUrl.toExternalForm(); // or broomUrl.getPath()  see explanation below
-            broomIcon = new ImageIcon(broomPath); // or directly new ImageIcon(broomURL) if it works
-
-           // ... (rest of broom setup)
-        }
-
-    } catch (Exception ex) { // More general exception handling
+        try {
+            URL broomUrl = getClass().getResource("/assets/broom.png");
+            if (broomUrl == null) {
+                System.err.println("Broom image not found!");
+            } else {
+                 broomIcon = new ImageIcon(broomUrl);  // Using URL directly for ImageIcon
+                 broomLabel = new JLabel(broomIcon);
+                 broomLabel.setVisible(false);
+                 jPanel1.add(broomLabel); // Now it's safe to add
+            }
+        } catch (Exception ex) {
             System.err.println("Error loading broom image: " + ex.getMessage());
-    }
+        }
           // Setup progress bars (including initial borders)
          setupVerticalProgressBar(jProgressBar1); // No title needed here
         setupVerticalProgressBar(jProgressBar2);
