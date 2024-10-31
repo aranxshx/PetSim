@@ -104,7 +104,7 @@ public class SpriteSheetRenderer extends JPanel {
         }
     }
 
-    private void togglePlayPauseMusic() {
+    public void togglePlayPauseMusic() {
         if (audioClip == null) {
             System.err.println("Audio clip is not initialized.");
             return;

@@ -190,11 +190,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
        //Ensure correct idle animation on load
        spriteRenderer.setAnimationRanges(new int[][]{{17,23}});
+       
+       spriteRenderer.setMusic("./mosic.wav");
+       spriteRenderer.togglePlayPauseMusic();
     }
     
 
     private void setupVerticalProgressBar(JProgressBar progressBar) {
-        progressBar.setOrientation(SwingConstants.VERTICAL);
+        progressBar.setOrientation(SwingConstants.VERTICAL);    
         progressBar.setPreferredSize(new Dimension(25, 100));
         progressBar.setStringPainted(false);  // Make sure string is painted
 
@@ -213,7 +216,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
 
     private void addProgressBarChangeListener(JProgressBar progressBar) {
-
+        
        progressBar.addChangeListener(e -> {
             // Other actions if needed (e.g., updating other components)
 
@@ -606,7 +609,8 @@ public class NewJFrame extends javax.swing.JFrame {
                         PetSim.obj1.addEnergy(2);
                         PetSim.obj1.addHealth(2);
                         PetSim.obj1.hungerIncrease(-1); // Increase Hunger
-                        PetSim.obj1.addHappiness(-6);
+                        PetSim.obj1.addHappiness(-1);
+                        PetSim.obj1.addCleanliness(-1);
                         limiter();
 
                         SwingUtilities.invokeLater(this::printStats);

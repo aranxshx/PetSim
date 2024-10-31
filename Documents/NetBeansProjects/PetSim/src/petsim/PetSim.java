@@ -167,6 +167,5 @@ public class PetSim {
         NewJFrame.loadStatsFromCSV();
         NewJFrame canvas = new NewJFrame();
         canvas.setVisible(true);
-        
     }
 }
