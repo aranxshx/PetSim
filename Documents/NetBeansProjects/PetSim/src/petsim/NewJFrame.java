@@ -17,6 +17,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 /**
  *
  * @author yuan
@@ -29,13 +34,21 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     
     // Global Variable Declaration
+    
     public boolean cleanClick = false; // This is a boolean for the Clean button
     public boolean cleanInformation = false; // Information for cleaning
     public boolean sleepStatus = false;
     private SpriteSheetRenderer spriteRenderer;
+    private JLabel broomLabel; // JLabel to hold the broom image
+    private ImageIcon broomIcon;
 
     // Method to update the progress bars
     private void updateProgressBars() {
+        jProgressBar1.setOrientation(SwingConstants.VERTICAL);
+        jProgressBar2.setOrientation(SwingConstants.VERTICAL);
+        jProgressBar3.setOrientation(SwingConstants.VERTICAL);
+        jProgressBar4.setOrientation(SwingConstants.VERTICAL);
+        jProgressBar5.setOrientation(SwingConstants.VERTICAL);
         jProgressBar1.setValue((int) PetSim.obj1.getHappinessLevel());
         jProgressBar2.setValue((int) PetSim.obj1.getHungerLevel());
         jProgressBar3.setValue((int) PetSim.obj1.getEnergyLevel());
@@ -109,9 +122,28 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() {
         initComponents();
+        //broom cursor for  clean
+        broomIcon = new ImageIcon("C://Users//yuan//Documents//NetBeansProjects//PetSims//Documents//NetBeansProjects//PetSim//src//petsim//assets//broom.png"); // Replace with your image path
+        broomLabel = new JLabel(broomIcon);
+        broomLabel.setVisible(false);  // Initially hidden
+        jPanel1.add(broomLabel);
+        
+          // Setup progress bars (including initial borders)
+         setupVerticalProgressBar(jProgressBar1); // No title needed here
+        setupVerticalProgressBar(jProgressBar2);
+        setupVerticalProgressBar(jProgressBar3);
+        setupVerticalProgressBar(jProgressBar4);
+        setupVerticalProgressBar(jProgressBar5);
+
+        // Add ChangeListeners to update text dynamically
+        addProgressBarChangeListener(jProgressBar1); // No title needed
+        addProgressBarChangeListener(jProgressBar2);
+        addProgressBarChangeListener(jProgressBar3);
+        addProgressBarChangeListener(jProgressBar4);
+        addProgressBarChangeListener(jProgressBar5);
         PetSim.obj1.loadStatsFromCSV(); // Load stats on startup
         updateProgressBars();
-         spriteRenderer = new SpriteSheetRenderer("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\PetSim\\Documents\\NetBeansProjects\\PetSim\\src\\petsim\\Tile.png", 32, 32);
+         spriteRenderer = new SpriteSheetRenderer("C://Users//yuan//Documents//NetBeansProjects//PetSims//Documents//NetBeansProjects//PetSim//src//petsim//assets//Tile.png", 32, 32);
          spriteRenderer.setMusic("lib/music.wav");
 
         jPanel1.add(spriteRenderer); // Important: Add to the panel.
@@ -121,14 +153,43 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1.add(spriteRenderer, BorderLayout.CENTER);
     
         jButton2.addActionListener(e -> doPlayAnimation());  // Use doPlayAnimation instead
-        jButton1.addActionListener(e -> updateSprite(49,56));  
-        jButton3.addActionListener(e -> updateSprite(97,112)); 
+        jButton1.addActionListener(e -> updateSprite(49,56));  //feed animation frames
+        jButton3.addActionListener(e -> updateSprite(177,179)); //clean animation frames
         jButton4.addActionListener(e->doSleepAnimation());
 
        //Ensure correct idle animation on load
-       spriteRenderer.setAnimationRanges(new int[][]{{129,136}});
+       spriteRenderer.setAnimationRanges(new int[][]{{17,23}});
     }
     
+
+    private void setupVerticalProgressBar(JProgressBar progressBar) {
+        progressBar.setOrientation(SwingConstants.VERTICAL);
+        progressBar.setPreferredSize(new Dimension(25, 100));
+        progressBar.setStringPainted(false);  // Make sure string is painted
+
+        Border bottomBorder = new MatteBorder(0, 0, 1, 0, Color.GRAY);
+        Border emptyBorder = new EmptyBorder(0, 0, 15, 0);  // Adjust bottom padding
+        CompoundBorder compoundBorder = new CompoundBorder(emptyBorder, bottomBorder);
+        progressBar.setBorder(compoundBorder);
+
+        // Set initial string (percentage)
+        progressBar.setString(progressBar.getValue() + "%");  // Set string here
+        progressBar.setStringPainted(false);
+
+    }
+
+
+
+
+    private void addProgressBarChangeListener(JProgressBar progressBar) {
+
+       progressBar.addChangeListener(e -> {
+            // Other actions if needed (e.g., updating other components)
+
+            progressBar.repaint(); // Repaint is usually still necessary
+            progressBar.revalidate(); 
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -238,6 +299,9 @@ public class NewJFrame extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel1MouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel1MouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel1MousePressed(evt);
             }
@@ -255,6 +319,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
 
         jProgressBar1.setValue(0);
+        jProgressBar1.setBorder(null);
 
         jProgressBar2.setValue(0);
 
@@ -296,24 +361,25 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton4)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -331,24 +397,25 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton2)
-                                        .addComponent(jButton1)
-                                        .addComponent(jButton4)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton2)
+                                    .addComponent(jButton4)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap(79, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton5)
+                                .addGap(25, 25, 25)))
+                        .addGap(34, 34, 34))))
         );
 
         pack();
@@ -447,17 +514,23 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // Every click of the mouse.
         // CLEAN ---- Increases Cleanliness, Decreases Energy
-        if (cleanClick){
+       if (cleanClick) {
             cleanClick = false;
             jButton3.setLabel("Clean");
-        } else if (!cleanClick) {
+            hideBroom();
+            spriteRenderer.setAnimationRanges(new int[][]{{17, 23}}); // Hide the broom when cleaning stops
+
+        } else {
             cleanClick = true;
             jButton3.setLabel("Stop");
+            showBroom(); // Show broom and set cursor when cleaning starts
+
             if (!cleanInformation) {
                 cleanInformation = true;
                 JOptionPane.showMessageDialog(this, "Drag your cursor across your pet to clean.", "Tip", JOptionPane.INFORMATION_MESSAGE);
@@ -520,13 +593,22 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
+         if (cleanClick) { 
+            Point mousePosition = evt.getPoint();
+            broomLabel.setLocation(mousePosition.x - broomIcon.getIconWidth() / 2, mousePosition.y - broomIcon.getIconHeight() / 2);
+         }
     }//GEN-LAST:event_jPanel1MouseMoved
 
     private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
         // TODO add your handling code here:
         System.out.println("Clean status: " + cleanClick);
-        if (cleanClick) {
+       if (cleanClick) {
+            showBroom(); // Only track and show broom if cleaning is active
+                        spriteRenderer.setAnimationRanges(new int[][]{{177, 179}}); // Cleaning animation 
+            Point mousePosition = evt.getPoint();
+            broomLabel.setLocation(mousePosition.x - broomIcon.getIconWidth() / 2, mousePosition.y - broomIcon.getIconHeight() / 2);
+
             if (!(PetSim.obj1.calculator(PetSim.obj1.getEnergyLevel(), 1))) { // 20 is the default usage of the Energy. That would mean (CurrentEnergyLevel - 20)
                 PetSim.obj1.addCleanliness(2);
                 PetSim.obj1.addEnergy(-1);
@@ -534,6 +616,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 printStats();
             } else {
                 JOptionPane.showMessageDialog(this, (PetSim.obj1.getName() + " cannot play anymore. Energy is low. \nSleep to regain energy."), "Warning", JOptionPane.WARNING_MESSAGE);
+                        spriteRenderer.setAnimationRanges(new int[][]{{17, 23}}); // Default animation
             }
         }
     }//GEN-LAST:event_jPanel1MouseEntered
@@ -562,6 +645,16 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton5MouseClicked
 
+    private void jPanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseExited
+
+        if(cleanClick) {
+             hideBroom();
+        }if (cleanClick) {
+            hideBroom();
+            spriteRenderer.setAnimationRanges(new int[][]{{17, 23}}); // Revert to default
+        }
+    }//GEN-LAST:event_jPanel1MouseExited
+
 
     // Action performed for the save button
         // Condition to check before saving stats
@@ -586,12 +679,12 @@ public class NewJFrame extends javax.swing.JFrame {
         if (sleepStatus) {
             sleepStatus = false;
             jButton4.setText("Sleep");
-              spriteRenderer.setAnimationRanges(new int[][]{{129,136}});  //Set animation back to idle
+              spriteRenderer.setAnimationRanges(new int[][]{{17,23}});  //Set animation back to idle
 
         } else {
             sleepStatus = true;
             jButton4.setText("Stop");
-              spriteRenderer.setAnimationRanges(new int[][]{{214,219}});
+              spriteRenderer.setAnimationRanges(new int[][]{{98,103}});//sleep sprite
         new Thread(() -> {
             while (sleepStatus) {
                 try {
@@ -635,7 +728,29 @@ public class NewJFrame extends javax.swing.JFrame {
         frame.setVisible(true);
     }
 }
+   private void showBroom() {
+        jPanel1.setCursor(createBroomCursor());
+        broomLabel.setVisible(true);
+    }
 
+    private void hideBroom() {
+        jPanel1.setCursor(Cursor.getDefaultCursor());
+        broomLabel.setVisible(false);
+    }
+
+ private Cursor createBroomCursor() {
+        // Create a custom cursor from the broom image
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+         // Create a blank cursor
+         Image blankImage = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
+         Cursor blankCursor = toolkit.createCustomCursor(blankImage, new Point(0,0), "blank cursor");
+
+         jPanel1.setCursor(blankCursor);
+
+        return toolkit.createCustomCursor(broomIcon.getImage(), new Point(10, 25), "broom cursor"); // Adjust hotspot as needed
+
+    }
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
