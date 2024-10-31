@@ -66,38 +66,6 @@ class catStats {
     public String getName() {
         return this.catName;
     }
-     public void saveStatsToCSV() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("catStats.csv", true))) {
-            writer.println(catName + "," + happinessLevel + "," + hungerLevel + "," + energyLevel + "," + cleanlinessLevel + "," + healthLevel);
-            System.out.println("Stats saved to catStats.csv");
-        } catch (IOException e) {
-            System.err.println("Error saving stats: " + e.getMessage());
-        }
-    }
-
-    // Method to load stats from a CSV file
-    public void loadStatsFromCSV() {
-        File file = new File("catStats.csv");
-        if (file.exists()) {
-            try (Scanner scanner = new Scanner(file)) {
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    String[] data = line.split(",");
-                    if (data.length == 6) {
-                        this.catName = data[0];
-                        this.happinessLevel = Double.parseDouble(data[1]);
-                        this.hungerLevel = Double.parseDouble(data[2]);
-                        this.energyLevel = Double.parseDouble(data[3]);
-                        this.cleanlinessLevel = Double.parseDouble(data[4]);
-                        this.healthLevel = Double.parseDouble(data[5]);
-                    }
-                }
-                System.out.println("Stats loaded from catStats.csv");
-            } catch (IOException e) {
-                System.err.println("Error loading stats: " + e.getMessage());
-            }
-        }
-    }
 }
 
 // Classes for Cat Stats
@@ -192,6 +160,8 @@ public class PetSim {
     public static cat obj1 = new cat();
     
     public static void main(String[] args) {
+        
+        NewJFrame.loadStatsFromCSV();
         NewJFrame canvas = new NewJFrame();
         canvas.setVisible(true);
         

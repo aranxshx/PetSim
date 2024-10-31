@@ -14,10 +14,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -150,7 +153,7 @@ public class NewJFrame extends javax.swing.JFrame {
         addProgressBarChangeListener(jProgressBar3);
         addProgressBarChangeListener(jProgressBar4);
         addProgressBarChangeListener(jProgressBar5);
-        PetSim.obj1.loadStatsFromCSV(); // Load stats on startup
+        // PetSim.obj1.loadStatsFromCSV(); // Load stats on startup ---------------------------------------------> LOAD
         updateProgressBars();
  try {
             URL spriteSheetUrl = getClass().getResource("/assets/Tile.png");
@@ -293,7 +296,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("User");
+        jLabel1.setText(PetSim.obj1.getName());
 
         jLabel3.setText("Cat Name");
 
@@ -660,7 +663,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 "Warning",
                 JOptionPane.WARNING_MESSAGE);
     } else {
-        PetSim.obj1.saveStatsToCSV(); // Save stats
+        saveStatsToCSV(); // ----------------------------------------------------- > Save stats
         JOptionPane.showMessageDialog(this,
                 "Cat stats saved successfully to CSV.",
                 "Save Successful",
@@ -742,7 +745,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public static void main(String[] args) {
         // Load stats from CSV when the application starts
-        obj1.loadStatsFromCSV(); 
+        loadStatsFromCSV();
 
         // Create an instance of the NewJFrame class
         NewJFrame frame = new NewJFrame();
@@ -790,4 +793,45 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JProgressBar jProgressBar5;
     // End of variables declaration//GEN-END:variables
+    public void saveStatsToCSV() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("catStats.csv", true))) {
+            writer.println(PetSim.obj1.getName() + "," + PetSim.obj1.getHappinessLevel() + "," + PetSim.obj1.getHungerLevel() + "," + PetSim.obj1.getEnergyLevel() + "," + PetSim.obj1.getCleanlinessLevel() + "," + PetSim.obj1.getHealthLevel());
+            System.out.println("Stats saved to catStats.csv");
+        } catch (IOException e) {
+            System.err.println("Error saving stats: " + e.getMessage());
+        }
+    }
+    
+    public static void loadStatsFromCSV() {
+        File file = new File("catStats.csv");
+        if (file.exists()) {
+            try (Scanner scanner = new Scanner(file)) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] data = line.split(",");
+                    if (data.length == 6) {
+                        PetSim.obj1.setName(data[0]);
+                        PetSim.obj1.setHappinessLevel(Double.parseDouble(data[1]));
+                        PetSim.obj1.setHungerLevel(Double.parseDouble(data[2]));
+                        PetSim.obj1.setEnergyLevel(Double.parseDouble(data[3]));
+                        PetSim.obj1.setCleanlinessLevel(Double.parseDouble(data[4]));
+                        PetSim.obj1.setHealthLevel(Double.parseDouble(data[5]));
+                    }
+                }
+                System.out.println("Stats loaded from catStats.csv");
+            } catch (IOException e) {
+                System.err.println("Error loading stats: " + e.getMessage());
+            }
+            
+            System.out.println("Loaded Stats from CSV");
+            System.out.println("Energy: " + PetSim.obj1.getEnergyLevel());
+            System.out.println("Happiness: " + PetSim.obj1.getHappinessLevel());
+            System.out.println("Hunger: " + PetSim.obj1.getHungerLevel());
+            System.out.println("Cleanliness: " + PetSim.obj1.getCleanlinessLevel());
+            System.out.println("Health: " + PetSim.obj1.getHealthLevel());
+            System.out.println("Name: " + PetSim.obj1.getName());
+            
+        }
+    }
+
 }
